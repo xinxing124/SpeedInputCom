@@ -1,4 +1,4 @@
-// SpeedTableDlg.cpp : ÊµÏÖÎÄ¼ş
+ï»¿// SpeedTableDlg.cpp : å®ç°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -12,13 +12,13 @@
 #define new DEBUG_NEW
 #endif
 
-//¶¨Òå´®¿ÚÊı¾İ½ÓÊÕÏûÏ¢³£Á¿
+//å®šä¹‰ä¸²å£æ•°æ®æ¥æ”¶æ¶ˆæ¯å¸¸é‡
 #define WM_RECV_SERIAL_DATA WM_USER + 101
 #define WM_RECV_TSERIAL_DATA WM_USER + 102
 #define WM_UPDATESIMULATION 1001
 
 #define PI	3.14159265
-// CSpeedTableDlg ¶Ô»°¿ò
+// CSpeedTableDlg å¯¹è¯æ¡†
 HANDLE g_hDetIOEvent;
 HWND g_hWnd;
 
@@ -63,8 +63,8 @@ BEGIN_MESSAGE_MAP(CSpeedTableDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CSpeedTableDlg ÏûÏ¢´¦Àí³ÌĞò
-//Ïß³Ìº¯Êı
+// CSpeedTableDlg æ¶ˆæ¯å¤„ç†ç¨‹åº
+//çº¿ç¨‹å‡½æ•°
 DWORD CSpeedTableDlg::ThreadFunc(LPVOID lparam)
 {
 	CSpeedTableDlg *SpeedTableDlg = (CSpeedTableDlg*)lparam;
@@ -74,16 +74,16 @@ DWORD CSpeedTableDlg::ThreadFunc(LPVOID lparam)
 		//SpeedTableDlg->GatherData();
 		//Sleep(3000);
 		/*
-		//Èç¹ûÊÕµ½¶ÁÏß³ÌÍË³öĞÅºÅ£¬ÔòÍË³öÏß³Ì
+		//å¦‚æœæ”¶åˆ°è¯»çº¿ç¨‹é€€å‡ºä¿¡å·ï¼Œåˆ™é€€å‡ºçº¿ç¨‹
 		dwRet=WaitForSingleObject(g_hDetIOEvent,500);
-		if (dwRet== WAIT_OBJECT_0)//µ÷ÊÔÄ£Ê½
+		if (dwRet== WAIT_OBJECT_0)//è°ƒè¯•æ¨¡å¼
 		{
 			//::AfxMessageBox(_T("1"));
 			//SpeedTableDlg->ReadParam();
 			::ShowWindow(g_hWnd,1);
 			break;
 		}
-		if ( dwRet== WAIT_TIMEOUT)//ÎŞ·µ»Ø³¬Ê±
+		if ( dwRet== WAIT_TIMEOUT)//æ— è¿”å›è¶…æ—¶
 		{
 			//WAIT_TIMEOUT
 			//::AfxMessageBox(_T("2"));
@@ -97,10 +97,10 @@ DWORD CSpeedTableDlg::ThreadFunc(LPVOID lparam)
 	return 0;
 }
 
-//¹Ø±Õ¶ÁÏß³Ì
+//å…³é—­è¯»çº¿ç¨‹
 void CSpeedTableDlg::CloseThread()
 {
-    //µÈ´ı4Ãë£¬Èç¹û¶ÁÏß³ÌÃ»ÓĞÍË³ö£¬ÔòÇ¿ÖÆÍË³ö
+    //ç­‰å¾…4ç§’ï¼Œå¦‚æœè¯»çº¿ç¨‹æ²¡æœ‰é€€å‡ºï¼Œåˆ™å¼ºåˆ¶é€€å‡º
     if (WaitForSingleObject(m_hThread,4000) == WAIT_TIMEOUT)
 	{
 		TerminateThread(m_hThread,0);
@@ -112,13 +112,13 @@ BOOL CSpeedTableDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	// ÉèÖÃ´Ë¶Ô»°¿òµÄÍ¼±ê¡£µ±Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú²»ÊÇ¶Ô»°¿òÊ±£¬¿ò¼Ü½«×Ô¶¯
-	//  Ö´ĞĞ´Ë²Ù×÷
-	SetIcon(m_hIcon, TRUE);			// ÉèÖÃ´óÍ¼±ê
-	SetIcon(m_hIcon, FALSE);		// ÉèÖÃĞ¡Í¼±ê
+	// è®¾ç½®æ­¤å¯¹è¯æ¡†çš„å›¾æ ‡ã€‚å½“åº”ç”¨ç¨‹åºä¸»çª—å£ä¸æ˜¯å¯¹è¯æ¡†æ—¶ï¼Œæ¡†æ¶å°†è‡ªåŠ¨
+	//  æ‰§è¡Œæ­¤æ“ä½œ
+	SetIcon(m_hIcon, TRUE);			// è®¾ç½®å¤§å›¾æ ‡
+	SetIcon(m_hIcon, FALSE);		// è®¾ç½®å°å›¾æ ‡
 
-	// TODO: ÔÚ´ËÌí¼Ó¶îÍâµÄ³õÊ¼»¯´úÂë
-	MoveWindow(0,0,480,272);//ÉèÖÃ´°Ìå´óĞ¡Îª480*272
+	// TODO: åœ¨æ­¤æ·»åŠ é¢å¤–çš„åˆå§‹åŒ–ä»£ç 
+	MoveWindow(0,0,480,272);//è®¾ç½®çª—ä½“å¤§å°ä¸º480*272
 
 	int iFullWidth = GetSystemMetrics(SM_CXSCREEN);
 	int iFullHeight = GetSystemMetrics(SM_CYSCREEN); 
@@ -126,10 +126,10 @@ BOOL CSpeedTableDlg::OnInitDialog()
 
 	SetTimer(WM_UPDATESIMULATION,5000, NULL);
 	
-	//´´½¨¼àÌıÏß³Ì
+	//åˆ›å»ºç›‘å¬çº¿ç¨‹
 	m_hThread = CreateThread(NULL,0,ThreadFunc,this,0,&m_dwThreadID);
 
-	//ÅĞ¶Ï´®¿ÚÊÇ·ñÒÑ¾­´ò¿ª
+	//åˆ¤æ–­ä¸²å£æ˜¯å¦å·²ç»æ‰“å¼€
 	if (m_pSerial != NULL)
 	{
 		m_pSerial->ClosePort();
@@ -138,33 +138,33 @@ BOOL CSpeedTableDlg::OnInitDialog()
 		m_pSerial = NULL;
 	}
 	
-	//ĞÂ½¨´®¿ÚÍ¨Ñ¶¶ÔÏó
+	//æ–°å»ºä¸²å£é€šè®¯å¯¹è±¡
 	m_pSerial = new CCESeries();
 	m_pSerial->m_OnSeriesRead = OnSerialRead; //
 
-	//´ò¿ª´®¿Ú
+	//æ‰“å¼€ä¸²å£
 	if(m_pSerial->OpenPort(this,1,9600,0,8,0))
 	{
-		//AfxMessageBox(L"´®¿Ú´ò¿ª³É¹¦");
+		//AfxMessageBox(L"ä¸²å£æ‰“å¼€æˆåŠŸ");
 		//Sleep(200);
 	}
 	else
 	{
-		AfxMessageBox(L"´®¿Ú1´ò¿ªÊ§°Ü");
+		AfxMessageBox(L"ä¸²å£1æ‰“å¼€å¤±è´¥");
 	}
 
 	m_pTSerial = new CCESeries();
 	m_pTSerial->m_OnSeriesRead = OnTSerialRead; //
 
-	//´ò¿ª´®¿Ú
+	//æ‰“å¼€ä¸²å£
 	if(m_pTSerial->OpenPort(this,2,9600,0,8,0))
 	{
-		//AfxMessageBox(L"´®¿Ú´ò¿ª³É¹¦");
+		//AfxMessageBox(L"ä¸²å£æ‰“å¼€æˆåŠŸ");
 		//Sleep(200);
 	}
 	else
 	{
-		AfxMessageBox(L"´®¿Ú2´ò¿ªÊ§°Ü");
+		AfxMessageBox(L"ä¸²å£2æ‰“å¼€å¤±è´¥");
 	}
 
 	ReadParam();
@@ -177,7 +177,7 @@ BOOL CSpeedTableDlg::OnInitDialog()
 	API_GPIO_Output(1,0);
 	API_GPIO_Output(2,0);
 	API_GPIO_Output(3,0);
-	return TRUE;  // ³ı·Ç½«½¹µãÉèÖÃµ½¿Ø¼ş£¬·ñÔò·µ»Ø TRUE
+	return TRUE;  // é™¤éå°†ç„¦ç‚¹è®¾ç½®åˆ°æ§ä»¶ï¼Œå¦åˆ™è¿”å› TRUE
 }
 
 #if defined(_DEVICE_RESOLUTION_AWARE) && !defined(WIN32_PLATFORM_WFSP)
@@ -198,34 +198,34 @@ void CSpeedTableDlg::OnSize(UINT /*nType*/, int /*cx*/, int /*cy*/)
 
 void CSpeedTableDlg::OnBnClickedButExit()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 	OnOK();
 }
 
 void CSpeedTableDlg::OnStnClickedLighting()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 
-	 //»ñµÃÖ¸Ïò¾²Ì¬¿Ø¼şµÄÖ¸Õë
+	 //è·å¾—æŒ‡å‘é™æ€æ§ä»¶çš„æŒ‡é’ˆ
 	 HBITMAP hBitmap;
 	 CStatic *pStatic=(CStatic *)GetDlgItem(IDC_LIGHTING);
 	 if(m_bLighting)
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
 		m_bLighting=false;
 		API_GPIO_Output(0,0);
 	 }
 	 else
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP2));
 		m_bLighting=true;
 		API_GPIO_Output(0,1);
 	 }
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şµÄÑùÊ½£¬Ê¹Æä¿ÉÒÔÊ¹ÓÃÎ»Í¼£¬²¢ÊÔÎ»±êÏÔÊ¾Ê¹¾ÓÖĞ
+	 //è®¾ç½®é™æ€æ§ä»¶çš„æ ·å¼ï¼Œä½¿å…¶å¯ä»¥ä½¿ç”¨ä½å›¾ï¼Œå¹¶è¯•ä½æ ‡æ˜¾ç¤ºä½¿å±…ä¸­
 	 pStatic->ModifyStyle(0xF,SS_BITMAP|SS_CENTERIMAGE);
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şÏÔÊ¾Î»Í¼
+	 //è®¾ç½®é™æ€æ§ä»¶æ˜¾ç¤ºä½å›¾
 	 pStatic->SetBitmap(hBitmap); 
 
 	 
@@ -234,87 +234,87 @@ void CSpeedTableDlg::OnStnClickedLighting()
 
 void CSpeedTableDlg::OnStnClickedCamera()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
-	//»ñµÃÖ¸Ïò¾²Ì¬¿Ø¼şµÄÖ¸Õë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
+	//è·å¾—æŒ‡å‘é™æ€æ§ä»¶çš„æŒ‡é’ˆ
 	 HBITMAP hBitmap;
 	 CStatic *pStatic=(CStatic *)GetDlgItem(IDC_CAMERA);
 	 if(m_bLighting)
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
 		m_bLighting=false;
 		API_GPIO_Output(1,0);
 	 }
 	 else
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP2));
 		m_bLighting=true;
 		API_GPIO_Output(1,1);
 	 }
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şµÄÑùÊ½£¬Ê¹Æä¿ÉÒÔÊ¹ÓÃÎ»Í¼£¬²¢ÊÔÎ»±êÏÔÊ¾Ê¹¾ÓÖĞ
+	 //è®¾ç½®é™æ€æ§ä»¶çš„æ ·å¼ï¼Œä½¿å…¶å¯ä»¥ä½¿ç”¨ä½å›¾ï¼Œå¹¶è¯•ä½æ ‡æ˜¾ç¤ºä½¿å±…ä¸­
 	 pStatic->ModifyStyle(0xF,SS_BITMAP|SS_CENTERIMAGE);
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şÏÔÊ¾Î»Í¼
+	 //è®¾ç½®é™æ€æ§ä»¶æ˜¾ç¤ºä½å›¾
 	 pStatic->SetBitmap(hBitmap); 
 }
 
 void CSpeedTableDlg::OnStnClickedRun()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
-	//»ñµÃÖ¸Ïò¾²Ì¬¿Ø¼şµÄÖ¸Õë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
+	//è·å¾—æŒ‡å‘é™æ€æ§ä»¶çš„æŒ‡é’ˆ
 	 HBITMAP hBitmap;
 	 CStatic *pStatic=(CStatic *)GetDlgItem(IDC_RUN);
 	 if(m_bLighting)
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
 		m_bLighting=false;
 		API_GPIO_Output(2,0);
 	 }
 	 else
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP2));
 		m_bLighting=true;
 		API_GPIO_Output(2,1);
 	 }
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şµÄÑùÊ½£¬Ê¹Æä¿ÉÒÔÊ¹ÓÃÎ»Í¼£¬²¢ÊÔÎ»±êÏÔÊ¾Ê¹¾ÓÖĞ
+	 //è®¾ç½®é™æ€æ§ä»¶çš„æ ·å¼ï¼Œä½¿å…¶å¯ä»¥ä½¿ç”¨ä½å›¾ï¼Œå¹¶è¯•ä½æ ‡æ˜¾ç¤ºä½¿å±…ä¸­
 	 pStatic->ModifyStyle(0xF,SS_BITMAP|SS_CENTERIMAGE);
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şÏÔÊ¾Î»Í¼
+	 //è®¾ç½®é™æ€æ§ä»¶æ˜¾ç¤ºä½å›¾
 	 pStatic->SetBitmap(hBitmap); 
 }
 
 
 void CSpeedTableDlg::OnStnClickedBack()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
-	//»ñµÃÖ¸Ïò¾²Ì¬¿Ø¼şµÄÖ¸Õë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
+	//è·å¾—æŒ‡å‘é™æ€æ§ä»¶çš„æŒ‡é’ˆ
 	 HBITMAP hBitmap;
 	 CStatic *pStatic=(CStatic *)GetDlgItem(IDC_BACK);
 	 if(m_bLighting)
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
 		m_bLighting=false;
 		API_GPIO_Output(3,0);
 	 }
 	 else
 	 {
-		//»ñµÃÎ»Í¼¾ä±ú
+		//è·å¾—ä½å›¾å¥æŸ„
 		hBitmap=::LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BITMAP2));
 		m_bLighting=true;
 		API_GPIO_Output(3,1);
 	 }
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şµÄÑùÊ½£¬Ê¹Æä¿ÉÒÔÊ¹ÓÃÎ»Í¼£¬²¢ÊÔÎ»±êÏÔÊ¾Ê¹¾ÓÖĞ
+	 //è®¾ç½®é™æ€æ§ä»¶çš„æ ·å¼ï¼Œä½¿å…¶å¯ä»¥ä½¿ç”¨ä½å›¾ï¼Œå¹¶è¯•ä½æ ‡æ˜¾ç¤ºä½¿å±…ä¸­
 	 pStatic->ModifyStyle(0xF,SS_BITMAP|SS_CENTERIMAGE);
-	 //ÉèÖÃ¾²Ì¬¿Ø¼şÏÔÊ¾Î»Í¼
+	 //è®¾ç½®é™æ€æ§ä»¶æ˜¾ç¤ºä½å›¾
 	 pStatic->SetBitmap(hBitmap); 
 }
 
 
 void CSpeedTableDlg::OnStnClickedPaintStatic()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 	CInputInfoDlg dlg;
 	dlg.m_pTSerial=m_pTSerial;
 	INT_PTR nResponse = dlg.DoModal();
@@ -326,7 +326,7 @@ void CSpeedTableDlg::OnStnClickedPaintStatic()
 
 void CSpeedTableDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: ÔÚ´ËÌí¼ÓÏûÏ¢´¦Àí³ÌĞò´úÂëºÍ/»òµ÷ÓÃÄ¬ÈÏÖµ
+	// TODO: åœ¨æ­¤æ·»åŠ æ¶ˆæ¯å¤„ç†ç¨‹åºä»£ç å’Œ/æˆ–è°ƒç”¨é»˜è®¤å€¼
 	//SpeedVal++;
 	//if(SpeedVal>27)SpeedVal=0;
 	//OnPaint();
@@ -349,14 +349,14 @@ int CSpeedTableDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	// TODO:  ÔÚ´ËÌí¼ÓÄú×¨ÓÃµÄ´´½¨´úÂë
+	// TODO:  åœ¨æ­¤æ·»åŠ æ‚¨ä¸“ç”¨çš„åˆ›å»ºä»£ç 
 
 	return 0;
 }
 
 void CSpeedTableDlg::OnClose()
 {
-	// TODO: ÔÚ´ËÌí¼ÓÏûÏ¢´¦Àí³ÌĞò´úÂëºÍ/»òµ÷ÓÃÄ¬ÈÏÖµ
+	// TODO: åœ¨æ­¤æ·»åŠ æ¶ˆæ¯å¤„ç†ç¨‹åºä»£ç å’Œ/æˆ–è°ƒç”¨é»˜è®¤å€¼
 
 	CDialog::OnClose();
 }
@@ -365,30 +365,30 @@ void CSpeedTableDlg::OnDestroy()
 {
 	CDialog::OnDestroy();
 
-	// TODO: ÔÚ´Ë´¦Ìí¼ÓÏûÏ¢´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ æ¶ˆæ¯å¤„ç†ç¨‹åºä»£ç 
 	KillTimer(WM_UPDATESIMULATION);
-	//¹Ø±Õ´®¿Ú
+	//å…³é—­ä¸²å£
 	//
 	if (m_pSerial != NULL)
 	{
-		//¹Ø±Õ´®¿Ú
+		//å…³é—­ä¸²å£
 		m_pSerial->ClosePort();
 
-		//ÊÍ·Å´®¿Ú¶ÔÏó
+		//é‡Šæ”¾ä¸²å£å¯¹è±¡
 		delete m_pSerial;
 		m_pSerial = NULL;
-		//AfxMessageBox(L"´®¿Ú¹Ø±Õ³É¹¦");
+		//AfxMessageBox(L"ä¸²å£å…³é—­æˆåŠŸ");
 	}
 
 	if (m_pTSerial != NULL)
 	{
-		//¹Ø±Õ´®¿Ú
+		//å…³é—­ä¸²å£
 		m_pTSerial->ClosePort();
 
-		//ÊÍ·Å´®¿Ú¶ÔÏó
+		//é‡Šæ”¾ä¸²å£å¯¹è±¡
 		delete m_pTSerial;
 		m_pTSerial = NULL;
-		//AfxMessageBox(L"´®¿Ú¹Ø±Õ³É¹¦");
+		//AfxMessageBox(L"ä¸²å£å…³é—­æˆåŠŸ");
 	}
 
 }
@@ -396,8 +396,8 @@ void CSpeedTableDlg::OnDestroy()
 void CSpeedTableDlg::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	// TODO: ÔÚ´Ë´¦Ìí¼ÓÏûÏ¢´¦Àí³ÌĞò´úÂë
-	// ²»Îª»æÍ¼ÏûÏ¢µ÷ÓÃ CDialog::OnPaint()
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ æ¶ˆæ¯å¤„ç†ç¨‹åºä»£ç 
+	// ä¸ä¸ºç»˜å›¾æ¶ˆæ¯è°ƒç”¨ CDialog::OnPaint()
 	pWnd=GetDlgItem(IDC_PAINT_STATIC); 
     pControlDC=pWnd->GetDC(); 
 
@@ -437,27 +437,27 @@ void CSpeedTableDlg::OnPaint()
     //pControlDC->LineTo(0,0);
 	
 	//CFont fontTitle;
-	//	fontTitle.CreatePointFont(200,L"Î¢ÈíÑÅºÚ");  
+	//	fontTitle.CreatePointFont(200,L"å¾®è½¯é›…é»‘");  
 /*
 	CRect clientRect;
-   GetClientRect(clientRect); // »ñµÃ¿Í»§Çø·¶Î§
+   GetClientRect(clientRect); // è·å¾—å®¢æˆ·åŒºèŒƒå›´
    
    CRect rect;
    rect.left = rect.top = 0;
    rect.right = 200;
-   rect.bottom = clientRect.bottom;  // ÏŞ¶¨¿í¶È
-   CString str = "ÌìÄÄ¡£¡£¶ÔÈø´ï";
+   rect.bottom = clientRect.bottom;  // é™å®šå®½åº¦
+   CString str = "å¤©å“ªã€‚ã€‚å¯¹è¨è¾¾";
    CRect temp = rect;
-   int height = pDC->DrawText(str,temp,DT_CENTER | DT_WORDBREAK | DT_CALCRECT | DT_EDITCONTROL); // »ñµÃÎÄ±¾¸ß¶È
+   int height = pDC->DrawText(str,temp,DT_CENTER | DT_WORDBREAK | DT_CALCRECT | DT_EDITCONTROL); // è·å¾—æ–‡æœ¬é«˜åº¦
 
-   rect.DeflateRect(0,(rect.Height() - height) / 2); // ¸Ä±ärect
+   rect.DeflateRect(0,(rect.Height() - height) / 2); // æ”¹å˜rect
    pDC->DrawText(str,rect, DT_CENTER | DT_EDITCONTROL | DT_WORDBREAK);
 */
 
 	CFont font;
-	font.CreatePointFont(200,L"Î¢ÈíÑÅºÚ"); 
+	font.CreatePointFont(200,L"å¾®è½¯é›…é»‘"); 
 	pControlDC->SetBkMode(TRANSPARENT);
-	pControlDC->SetTextColor(RGB(255,0,0));    //Static¿Ø¼ş1µÄ×ÖÌåÑÕÉ«-ºìÉ«
+	pControlDC->SetTextColor(RGB(255,0,0));    //Staticæ§ä»¶1çš„å­—ä½“é¢œè‰²-çº¢è‰²
 	pControlDC->SelectObject(&font); 
 
 	rect.left=96;
@@ -469,8 +469,8 @@ void CSpeedTableDlg::OnPaint()
 	//fontTitle.DeleteObject();
 
    //CRect temp = rect;
-   //int height = pControlDC->DrawText(str,temp,DT_CENTER | DT_WORDBREAK | DT_CALCRECT | DT_EDITCONTROL); // »ñµÃÎÄ±¾¸ß¶È
-   //rect.DeflateRect(0,(rect.Height() - height) / 2); // ¸Ä±ärect
+   //int height = pControlDC->DrawText(str,temp,DT_CENTER | DT_WORDBREAK | DT_CALCRECT | DT_EDITCONTROL); // è·å¾—æ–‡æœ¬é«˜åº¦
+   //rect.DeflateRect(0,(rect.Height() - height) / 2); // æ”¹å˜rect
 
     CString str = L"36.00V";
     str.Format(L"%.2fV",BatteryVal);
@@ -491,39 +491,39 @@ void CSpeedTableDlg::OnPaint()
 
 }
 
-//¶¨Òå´®¿Ú½ÓÊÕÊı¾İº¯ÊıÀàĞÍ
+//å®šä¹‰ä¸²å£æ¥æ”¶æ•°æ®å‡½æ•°ç±»å‹
 void CALLBACK CSpeedTableDlg::OnSerialRead(void * pOwner,BYTE* buf,DWORD bufLen)
 {
-	BYTE *pRecvBuf = NULL; //½ÓÊÕ»º³åÇø
-	//µÃµ½¸¸¶ÔÏóÖ¸Õë
+	BYTE *pRecvBuf = NULL; //æ¥æ”¶ç¼“å†²åŒº
+	//å¾—åˆ°çˆ¶å¯¹è±¡æŒ‡é’ˆ
 	CSpeedTableDlg* pThis = (CSpeedTableDlg*)pOwner;
-	//½«½ÓÊÕµÄ»º³åÇø¿½±´µ½pRecvBufÖÖ
+	//å°†æ¥æ”¶çš„ç¼“å†²åŒºæ‹·è´åˆ°pRecvBufç§
 	pRecvBuf = new BYTE[bufLen];
 	CopyMemory(pRecvBuf,buf,bufLen);
 
-	//·¢ËÍÒì²½ÏûÏ¢£¬±íÊ¾ÊÕµ½´®¿ÚÊı¾İ£¬ÏûÏ¢´¦ÀíÍê£¬Ó¦ÊÍ·ÅÄÚ´æ
+	//å‘é€å¼‚æ­¥æ¶ˆæ¯ï¼Œè¡¨ç¤ºæ”¶åˆ°ä¸²å£æ•°æ®ï¼Œæ¶ˆæ¯å¤„ç†å®Œï¼Œåº”é‡Šæ”¾å†…å­˜
 	pThis->PostMessage(WM_RECV_SERIAL_DATA,WPARAM(pRecvBuf),bufLen);
 
 }
 
-// ´®¿Ú½ÓÊÕÊı¾İ´¦Àíº¯Êı
+// ä¸²å£æ¥æ”¶æ•°æ®å¤„ç†å‡½æ•°
 LONG CSpeedTableDlg::OnRecvSerialData(WPARAM wParam,LPARAM lParam)
 {
 	//CString strOldRecv = L"";
 	//CString strRecv = L"";
-	//´®¿Ú½ÓÊÕµ½µÄBUF
+	//ä¸²å£æ¥æ”¶åˆ°çš„BUF
 	CHAR *pBuf = (CHAR*)wParam;
 	//Wendu=*pBuf;
-	//´®¿Ú½ÓÊÕµ½µÄBUF³¤¶È
+	//ä¸²å£æ¥æ”¶åˆ°çš„BUFé•¿åº¦
 	DWORD dwBufLen = lParam;
 	
 	CHAR cVal[10];
 
-	//½ÓÊÕ¿ò
+	//æ¥æ”¶æ¡†
 	//CEdit *pEdtRecvMsg = (CEdit*)GetDlgItem(IDC_STATIC2);
 	//ASSERT(pEdtRecvMsg != NULL);
 
-	//µÃµ½½ÓÊÕ¿òÖĞµÄÀúÊ·ÎÄ±¾
+	//å¾—åˆ°æ¥æ”¶æ¡†ä¸­çš„å†å²æ–‡æœ¬
 	//pEdtRecvMsg->GetWindowTextW(strOldRecv);
 	//>+07.537+07.538-00.000-00.000
 
@@ -549,12 +549,12 @@ LONG CSpeedTableDlg::OnRecvSerialData(WPARAM wParam,LPARAM lParam)
 	//	m_SecondaryVal=t;
 	//}
 	
-	//½«ĞÂ½ÓÊÕµ½µÄÎÄ±¾Ìí¼Óµ½½ÓÊÕ¿òÖĞ
+	//å°†æ–°æ¥æ”¶åˆ°çš„æ–‡æœ¬æ·»åŠ åˆ°æ¥æ”¶æ¡†ä¸­
 	//strOldRecv = strOldRecv + strRecv;
 	
 	//pEdtRecvMsg->SetWindowTextW(strRecv);
 
-	//ÊÍ·ÅÄÚ´æ
+	//é‡Šæ”¾å†…å­˜
 	delete[] pBuf;
 	pBuf = NULL;
 
@@ -566,30 +566,30 @@ LONG CSpeedTableDlg::OnRecvSerialData(WPARAM wParam,LPARAM lParam)
 	return 0;
 }
  
-//¶¨Òå´®¿Ú½ÓÊÕÊı¾İº¯ÊıÀàĞÍ
+//å®šä¹‰ä¸²å£æ¥æ”¶æ•°æ®å‡½æ•°ç±»å‹
 void CALLBACK CSpeedTableDlg::OnTSerialRead(void * pOwner,BYTE* buf,DWORD bufLen)
 {
-	BYTE *pRecvBuf = NULL; //½ÓÊÕ»º³åÇø
-	//µÃµ½¸¸¶ÔÏóÖ¸Õë
+	BYTE *pRecvBuf = NULL; //æ¥æ”¶ç¼“å†²åŒº
+	//å¾—åˆ°çˆ¶å¯¹è±¡æŒ‡é’ˆ
 	CSpeedTableDlg* pThis = (CSpeedTableDlg*)pOwner;
-	//½«½ÓÊÕµÄ»º³åÇø¿½±´µ½pRecvBufÖÖ
+	//å°†æ¥æ”¶çš„ç¼“å†²åŒºæ‹·è´åˆ°pRecvBufç§
 	pRecvBuf = new BYTE[bufLen];
 	CopyMemory(pRecvBuf,buf,bufLen);
 
-	//·¢ËÍÒì²½ÏûÏ¢£¬±íÊ¾ÊÕµ½´®¿ÚÊı¾İ£¬ÏûÏ¢´¦ÀíÍê£¬Ó¦ÊÍ·ÅÄÚ´æ
+	//å‘é€å¼‚æ­¥æ¶ˆæ¯ï¼Œè¡¨ç¤ºæ”¶åˆ°ä¸²å£æ•°æ®ï¼Œæ¶ˆæ¯å¤„ç†å®Œï¼Œåº”é‡Šæ”¾å†…å­˜
 	pThis->PostMessage(WM_RECV_TSERIAL_DATA,WPARAM(pRecvBuf),bufLen);
 
 }
 
-// ´®¿Ú½ÓÊÕÊı¾İ´¦Àíº¯Êı
+// ä¸²å£æ¥æ”¶æ•°æ®å¤„ç†å‡½æ•°
 LONG CSpeedTableDlg::OnRecvTSerialData(WPARAM wParam,LPARAM lParam)
 {
 	//CString strOldRecv = L"";
 	CString strRecv = L"";
-	//´®¿Ú½ÓÊÕµ½µÄBUF
+	//ä¸²å£æ¥æ”¶åˆ°çš„BUF
 	CHAR *pBuf = (CHAR*)wParam;
 	//Wendu=*pBuf;
-	//´®¿Ú½ÓÊÕµ½µÄBUF³¤¶È
+	//ä¸²å£æ¥æ”¶åˆ°çš„BUFé•¿åº¦
 	DWORD dwBufLen = lParam;
 	
 	CHAR cVal[10];
@@ -607,11 +607,11 @@ LONG CSpeedTableDlg::OnRecvTSerialData(WPARAM wParam,LPARAM lParam)
 		RunFlag=false;
 		OnPaint();
 	}
-	//½ÓÊÕ¿ò
+	//æ¥æ”¶æ¡†
 	//CEdit *pEdtRecvMsg = (CEdit*)GetDlgItem(IDC_STATIC2);
 	//ASSERT(pEdtRecvMsg != NULL);
 
-	//µÃµ½½ÓÊÕ¿òÖĞµÄÀúÊ·ÎÄ±¾
+	//å¾—åˆ°æ¥æ”¶æ¡†ä¸­çš„å†å²æ–‡æœ¬
 	//pEdtRecvMsg->GetWindowTextW(strOldRecv);
 	//>+07.537+07.538-00.000-00.000
 
@@ -637,12 +637,12 @@ LONG CSpeedTableDlg::OnRecvTSerialData(WPARAM wParam,LPARAM lParam)
 	//	m_SecondaryVal=t;
 	//}
 	
-	//½«ĞÂ½ÓÊÕµ½µÄÎÄ±¾Ìí¼Óµ½½ÓÊÕ¿òÖĞ
+	//å°†æ–°æ¥æ”¶åˆ°çš„æ–‡æœ¬æ·»åŠ åˆ°æ¥æ”¶æ¡†ä¸­
 	//strOldRecv = strOldRecv + strRecv;
 	
 	//pEdtRecvMsg->SetWindowTextW(strRecv);
 
-	//ÊÍ·ÅÄÚ´æ
+	//é‡Šæ”¾å†…å­˜
 	delete[] pBuf;
 	pBuf = NULL;
 
@@ -658,31 +658,31 @@ int CSpeedTableDlg::GatherData(void)
 {
 
 	
-	//·¢ËÍÊı¾İ
-	char * buf  =NULL;  //¶¨Òå·¢ËÍ»º³åÇø
-	DWORD dwBufLen = 0;   //¶¨Òå·¢ËÍ»º³åÇø³¤¶È
+	//å‘é€æ•°æ®
+	char * buf  =NULL;  //å®šä¹‰å‘é€ç¼“å†²åŒº
+	DWORD dwBufLen = 0;   //å®šä¹‰å‘é€ç¼“å†²åŒºé•¿åº¦
 	CString strSend = L"#01\r";
 
-	//´®¿ÚÈç¹ûÃ»ÓĞ´ò¿ª£¬Ö±½Ó·µ»Ø
+	//ä¸²å£å¦‚æœæ²¡æœ‰æ‰“å¼€ï¼Œç›´æ¥è¿”å›
 	if (m_pSerial == NULL)
 	{
-		//AfxMessageBox(L"ÇëÏÈ´ò¿ª´®¿Ú");
+		//AfxMessageBox(L"è¯·å…ˆæ‰“å¼€ä¸²å£");
 		return -1;
 	}
 	
-	//½«´ı·¢ËÍµÄ×Ö·û´®×ª»»³Éµ¥×Ö½Ú£¬½øĞĞ·¢ËÍ
+	//å°†å¾…å‘é€çš„å­—ç¬¦ä¸²è½¬æ¢æˆå•å­—èŠ‚ï¼Œè¿›è¡Œå‘é€
 	buf = new char[strSend.GetLength()*2+1];
 	ZeroMemory(buf,strSend.GetLength()*2+1);
-	//×ª»»³Éµ¥×Ö½Ú½øĞĞ·¢ËÍ	
+	//è½¬æ¢æˆå•å­—èŠ‚è¿›è¡Œå‘é€	
 	WideCharToMultiByte(CP_ACP,WC_COMPOSITECHECK,strSend.GetBuffer(strSend.GetLength())
 	   ,strSend.GetLength(),buf,strSend.GetLength()*2,NULL,NULL);
 
 	dwBufLen = strlen(buf) + 1;
 
-	//·¢ËÍ×Ö·û´®
+	//å‘é€å­—ç¬¦ä¸²
 	m_pSerial->WriteSyncPort((BYTE*)buf,dwBufLen);
 
-	//ÊÍ·ÅÄÚ´æ
+	//é‡Šæ”¾å†…å­˜
 	delete[] buf;
 	buf = NULL;
 
@@ -693,52 +693,52 @@ int CSpeedTableDlg::GatherData(void)
 int CSpeedTableDlg::FileRead(CString filename,CString* content)
 {
 	int lRet;
-	HANDLE hFile = INVALID_HANDLE_VALUE;	// ÎÄ¼ş¾ä±ú 
+	HANDLE hFile = INVALID_HANDLE_VALUE;	// æ–‡ä»¶å¥æŸ„ 
 	if(::GetFileAttributes(filename)==0xFFFFFFFF)
 	{
-	//::AfxMessageBox(_T("ÎÄ¼ş²»´æÔÚ"));
+	//::AfxMessageBox(_T("æ–‡ä»¶ä¸å­˜åœ¨"));
 		return -5;
 	}
-	// ´´½¨Ò»¸öÎÄ¼ş»ò´ò¿ªÒ»¸öÎÄ¼ş
+	// åˆ›å»ºä¸€ä¸ªæ–‡ä»¶æˆ–æ‰“å¼€ä¸€ä¸ªæ–‡ä»¶
 	hFile = CreateFile(filename, GENERIC_READ | GENERIC_WRITE, 0, 
 					   NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
-		//AfxMessageBox(_T("´ò¿ªÎÄ¼şÊ§°Ü!"));
+		//AfxMessageBox(_T("æ‰“å¼€æ–‡ä»¶å¤±è´¥!"));
 		return -1;
 	}
 
 	DWORD filelen,actlen;
 	char *pcharbuff;
 	
-	filelen = GetFileSize(hFile, NULL);							// »ñÈ¡ÎÄ¼ş´óĞ¡
+	filelen = GetFileSize(hFile, NULL);							// è·å–æ–‡ä»¶å¤§å°
 	if (filelen == 0xFFFFFFFF)
 	{
-		//AfxMessageBox(_T("»ñÈ¡ÎÄ¼ş´óĞ¡Ê§°Ü!"));
+		//AfxMessageBox(_T("è·å–æ–‡ä»¶å¤§å°å¤±è´¥!"));
 		return -2;	
 	}
 
-	BOOL ret = SetFilePointer(hFile, 0, NULL, FILE_BEGIN);		// ÒÆ¶¯ÎÄ¼şÖ¸Õëµ½ÎÄ¼ş¿ªÍ·
+	BOOL ret = SetFilePointer(hFile, 0, NULL, FILE_BEGIN);		// ç§»åŠ¨æ–‡ä»¶æŒ‡é’ˆåˆ°æ–‡ä»¶å¼€å¤´
 	if (ret == 0xFFFFFFFF)
 	{
-		//AfxMessageBox(_T("½«ÎÄ¼şÖ¸ÕëÒÆÖÁÎÄ¼ş¿ªÍ·Ê§°Ü!"));
+		//AfxMessageBox(_T("å°†æ–‡ä»¶æŒ‡é’ˆç§»è‡³æ–‡ä»¶å¼€å¤´å¤±è´¥!"));
 		return -3;	
 	}
 
 	pcharbuff = new char[filelen];
-	ret = ReadFile(hFile, pcharbuff, filelen, &actlen, NULL);	// ´ÓÎÄ¼şÖĞ¶Á³öÊı¾İ 
+	ret = ReadFile(hFile, pcharbuff, filelen, &actlen, NULL);	// ä»æ–‡ä»¶ä¸­è¯»å‡ºæ•°æ® 
 	if (ret == TRUE)
 	{
 		LPTSTR pStr = content->GetBuffer(filelen);	
-		// ½«×Ö½Ú×ª»¯Îª Unicode ×Ö·û´®
+		// å°†å­—èŠ‚è½¬åŒ–ä¸º Unicode å­—ç¬¦ä¸²
 		MultiByteToWideChar(CP_ACP, 0, pcharbuff, filelen, pStr, filelen);
 		content->ReleaseBuffer();
-		//AfxMessageBox(_T("¶ÁÎÄ¼ş³É¹¦!"));	
+		//AfxMessageBox(_T("è¯»æ–‡ä»¶æˆåŠŸ!"));	
 		lRet=0;
 	}
 	else
 	{
-		//AfxMessageBox(_T("¶ÁÎÄ¼şÊ§°Ü!"));	
+		//AfxMessageBox(_T("è¯»æ–‡ä»¶å¤±è´¥!"));	
 		lRet=-4;
 	}
 

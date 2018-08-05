@@ -1,4 +1,4 @@
-// InputInfoDlg.cpp : ÊµÏÖÎÄ¼þ
+ï»¿// InputInfoDlg.cpp : å®žçŽ°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -6,7 +6,7 @@
 #include "InputInfoDlg.h"
 
 
-// CInputInfoDlg ¶Ô»°¿ò
+// CInputInfoDlg å¯¹è¯æ¡†
 
 IMPLEMENT_DYNAMIC(CInputInfoDlg, CDialog)
 
@@ -36,7 +36,7 @@ BEGIN_MESSAGE_MAP(CInputInfoDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CInputInfoDlg ÏûÏ¢´¦Àí³ÌÐò
+// CInputInfoDlg æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 void CInputInfoDlg::OnButton(UINT ID)
 {
@@ -82,31 +82,31 @@ void CInputInfoDlg::OnButton(UINT ID)
 		OnOK();
 		break;
 	case 1111:
-			//·¢ËÍÊý¾Ý
-		char * buf  =NULL;  //¶¨Òå·¢ËÍ»º³åÇø
-		DWORD dwBufLen = 0;   //¶¨Òå·¢ËÍ»º³åÇø³¤¶È
+			//å‘é€æ•°æ®
+		char * buf  =NULL;  //å®šä¹‰å‘é€ç¼“å†²åŒº
+		DWORD dwBufLen = 0;   //å®šä¹‰å‘é€ç¼“å†²åŒºé•¿åº¦
 		CString strSend = _T("L:") +sMileage +_T("B:")+sBoard;
 
-		//´®¿ÚÈç¹ûÃ»ÓÐ´ò¿ª£¬Ö±½Ó·µ»Ø
+		//ä¸²å£å¦‚æžœæ²¡æœ‰æ‰“å¼€ï¼Œç›´æŽ¥è¿”å›ž
 		if (m_pTSerial == NULL)
 		{
-			//AfxMessageBox(L"ÇëÏÈ´ò¿ª´®¿Ú");
+			//AfxMessageBox(L"è¯·å…ˆæ‰“å¼€ä¸²å£");
 			return;
 		}
 		
-		//½«´ý·¢ËÍµÄ×Ö·û´®×ª»»³Éµ¥×Ö½Ú£¬½øÐÐ·¢ËÍ
+		//å°†å¾…å‘é€çš„å­—ç¬¦ä¸²è½¬æ¢æˆå•å­—èŠ‚ï¼Œè¿›è¡Œå‘é€
 		buf = new char[strSend.GetLength()*2+1];
 		ZeroMemory(buf,strSend.GetLength()*2+1);
-		//×ª»»³Éµ¥×Ö½Ú½øÐÐ·¢ËÍ	
+		//è½¬æ¢æˆå•å­—èŠ‚è¿›è¡Œå‘é€	
 		WideCharToMultiByte(CP_ACP,WC_COMPOSITECHECK,strSend.GetBuffer(strSend.GetLength())
 		   ,strSend.GetLength(),buf,strSend.GetLength()*2,NULL,NULL);
 
 		dwBufLen = strlen(buf) + 1;
 
-		//·¢ËÍ×Ö·û´®
+		//å‘é€å­—ç¬¦ä¸²
 		m_pTSerial->WriteSyncPort((BYTE*)buf,dwBufLen);
 
-		//ÊÍ·ÅÄÚ´æ
+		//é‡Šæ”¾å†…å­˜
 		delete[] buf;
 		buf = NULL;
 
@@ -121,7 +121,7 @@ void CInputInfoDlg::OnButton(UINT ID)
 
 void CInputInfoDlg::OnStnClickedStcNotes()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼þÍ¨Öª´¦Àí³ÌÐò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æŽ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 	iExitFlag++;
 	if(iExitFlag>9) exit(0);
 }

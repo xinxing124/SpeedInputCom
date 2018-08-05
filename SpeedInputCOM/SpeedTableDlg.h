@@ -1,49 +1,49 @@
-// SpeedTableDlg.h : Í·ÎÄ¼ş
+ï»¿// SpeedTableDlg.h : å¤´æ–‡ä»¶
 //
 #include "CESeries.h"
 
 #pragma once
 
-// CSpeedTableDlg ¶Ô»°¿ò
+// CSpeedTableDlg å¯¹è¯æ¡†
 class CSpeedTableDlg : public CDialog
 {
-// ¹¹Ôì
+// æ„é€ 
 public:
-	CSpeedTableDlg(CWnd* pParent = NULL);	// ±ê×¼¹¹Ôìº¯Êı
+	CSpeedTableDlg(CWnd* pParent = NULL);	// æ ‡å‡†æ„é€ å‡½æ•°
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 	enum { IDD = IDD_SPEEDTABLE_DIALOG };
-	CWnd* pWnd; //±íÊ¾¿Ø¼ş´°¿ÚµÄ±äÁ¿ 
-    CDC* pControlDC; //±íÊ¾¿Ø¼ş´°¿ÚµÄÉè±¸ÃèÊö±í.DC 
+	CWnd* pWnd; //è¡¨ç¤ºæ§ä»¶çª—å£çš„å˜é‡ 
+    CDC* pControlDC; //è¡¨ç¤ºæ§ä»¶çª—å£çš„è®¾å¤‡æè¿°è¡¨.DC 
 private:
-	//Ïß³Ìº¯Êı
+	//çº¿ç¨‹å‡½æ•°
     static  DWORD WINAPI ThreadFunc(LPVOID lparam);
-	//¹Ø±Õ¶ÁÏß³Ì
+	//å…³é—­è¯»çº¿ç¨‹
 	void CloseThread();
 private:
-	//¶ÁÏß³Ì¾ä±ú
+	//è¯»çº¿ç¨‹å¥æŸ„
 	HANDLE m_hThread;
-	//¶ÁÏß³ÌID±êÊ¶
+	//è¯»çº¿ç¨‹IDæ ‡è¯†
 	DWORD m_dwThreadID;
 	double m_RecvData[4];
 public:
 	CCESeries *m_pSerial;
 	CCESeries *m_pTSerial;
 	double m_Xishu[2];
-	//¶¨Òå´®¿Ú½ÓÊÕÊı¾İº¯ÊıÀàĞÍ
+	//å®šä¹‰ä¸²å£æ¥æ”¶æ•°æ®å‡½æ•°ç±»å‹
 	static void CALLBACK OnSerialRead(void * pOwner,BYTE* buf,DWORD bufLen);
 	static void CALLBACK OnTSerialRead(void * pOwner,BYTE* buf,DWORD bufLen);
 	int GatherData(void);
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV æ”¯æŒ
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	HICON m_hIcon;
 
-	// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+	// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 	virtual BOOL OnInitDialog();
-	// ´®¿Ú½ÓÊÕÊı¾İ´¦Àíº¯Êı
+	// ä¸²å£æ¥æ”¶æ•°æ®å¤„ç†å‡½æ•°
 	afx_msg LONG OnRecvSerialData(WPARAM wParam,LPARAM lParam);
 	afx_msg LONG OnRecvTSerialData(WPARAM wParam,LPARAM lParam);
 #if defined(_DEVICE_RESOLUTION_AWARE) && !defined(WIN32_PLATFORM_WFSP)

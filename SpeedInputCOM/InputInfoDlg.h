@@ -1,22 +1,22 @@
-#pragma once
+ï»¿#pragma once
 #include "CESeries.h"
 //#include "Resource.h"
 
-// CInputInfoDlg ¶Ô»°¿ò
+// CInputInfoDlg å¯¹è¯æ¡†
 
 class CInputInfoDlg : public CDialog
 {
 	DECLARE_DYNAMIC(CInputInfoDlg)
 
 public:
-	CInputInfoDlg(CWnd* pParent = NULL);   // ±ê×¼¹¹Ôìº¯Êı
+	CInputInfoDlg(CWnd* pParent = NULL);   // æ ‡å‡†æ„é€ å‡½æ•°
 	virtual ~CInputInfoDlg();
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 	enum { IDD = IDD_INPUT_DIALOG };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV æ”¯æŒ
 
 	DECLARE_MESSAGE_MAP()
 public:
